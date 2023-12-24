@@ -1,0 +1,32 @@
+name: Deploy workspaces
+
+on:
+  workflow_call:
+    inputs:
+      workspaces:
+        required: true
+        type: string
+    secrets:
+      token:
+        required: true
+
+env:
+  TF_INPUT: 0
+  TF_IN_AUTOMATION: 1
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: hashicorp/setup-terraform@v3
+      with:
+        cli_config_credentials_token: ${{ secrets.token }}
+    - run: |
+        terraform init
+        terraform validate
+        terraform apply -auto-approve
+      env:
+        TFE_TOKEN: ${{ secrets.token }}
+        TF_VAR_workspaces: ${{ inputs.workspaces }}
+    
