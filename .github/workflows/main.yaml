@@ -7,7 +7,9 @@ on:
         required: true
         type: string
     secrets:
-      token:
+      tfc-token:
+        required: true
+      tfe-token:
         required: true
 
 env:
@@ -23,13 +25,13 @@ jobs:
         repository: mdmsua/aks-tfe
     - uses: hashicorp/setup-terraform@v3
       with:
-        cli_config_credentials_token: ${{ secrets.token }}
+        cli_config_credentials_token: ${{ secrets.tfc-token }}
     - run: |
         terraform init
         terraform validate
         terraform plan -out terraform.tfplan
         terraform apply -auto-approve terraform.tfplan
       env:
-        TFE_TOKEN: ${{ secrets.token }}
+        TFE_TOKEN: ${{ secrets.tfe-token }}
         TF_VAR_workspaces: ${{ inputs.workspaces }}
     
