@@ -27,7 +27,8 @@ jobs:
     - run: |
         terraform init
         terraform validate
-        terraform apply -auto-approve
+        terraform plan -out terraform.tfplan
+        terraform apply -auto-approve terraform.tfplan
       env:
         TFE_TOKEN: ${{ secrets.token }}
         TF_VAR_workspaces: ${{ inputs.workspaces }}
