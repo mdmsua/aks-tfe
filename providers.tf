@@ -15,4 +15,5 @@ terraform {
 
 provider "tfe" {
   organization = "Megamango"
+  token        = var.token
 }

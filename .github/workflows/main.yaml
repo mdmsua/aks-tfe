@@ -32,6 +32,6 @@ jobs:
         terraform plan -out terraform.tfplan
         terraform apply -auto-approve terraform.tfplan
       env:
-        TFE_TOKEN: ${{ secrets.tfe-token }}
         TF_VAR_workspaces: ${{ inputs.workspaces }}
+        TF_VAR_token: ${{ secrets.tfe-token }}
     
