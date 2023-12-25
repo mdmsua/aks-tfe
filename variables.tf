@@ -1,5 +1,5 @@
 variable "workspaces" {
-  type = list(string)
+  type = map(set(string))
 }
 variable "token" {
   type      = string
